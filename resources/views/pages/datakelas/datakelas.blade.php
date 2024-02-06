@@ -131,23 +131,27 @@ button.t:hover span {
                                 <th>Nama Kelas</th>
                                 <th>Wali Kelas</th>
                                 <th>Jurusan</th>
-                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                          @foreach ($data as $item)
                             <tr>
-                              <td>No</td>
-                              <td>Nama Jurusan</td>
-                              <td>Wali Kelas</td>
-                              <td>Kelas</td>
-                              <td>Tanggal</td>
-                              <td>
-                                  <a href="{{ route('kelas.edit')}}" class="btn btn-outline-warning btn-sm">Edit</a> -
-                                  <a href="" class="btn btn-inverse-danger btn-sm">Hapus</a> -
+                              <td>{{ $loop->iteration }}</td>
+                              <td>{{ $item->nama_kelas }}</td>
+                              <td>{{ $item->nama_walikelas }}</td>
+                              <td>{{ $item->nama_jurusan }}</td>
+                              <td class="btn-group">
+                                  <a href="{{ route('kelas.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a>
+                                  <form action="{{ route('kelas.destroy', $item->id)}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                  </form>
                                   <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
                               </td>
                             </tr>
+                          @endforeach
                         </tbody>
                     </table>
                 </div>

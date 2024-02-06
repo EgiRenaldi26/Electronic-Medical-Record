@@ -9,18 +9,20 @@
                 <br>
                 <a href="{{ route('kelas.index')}}" class="btn btn-outline-primary btn-sm">Kembali</a>
                 <br><br>
-                  <form class="forms-sample">
+                  <form class="forms-sample" action="{{ route('kelas.update', $data->id) }}" method="POST">
+                    @csrf
+                    @method('put')
                     <div class="form-group">
                       <label for="nama_kelas">Nama Kelas</label>
-                      <input type="text" class="form-control" id="nama_kelas" placeholder="Nama Kelas">
+                      <input type="text" class="form-control" name="nama_kelas" placeholder="Nama Kelas" value="{{ $data->nama_kelas }}">
                     </div>
                     <div class="form-group">
                       <label for="nama_walikelas">Wali Kelas</label>
-                      <input type="text" class="form-control" id="nama_walikelas" placeholder="Nama Wali Kelas">
+                      <input type="text" class="form-control" name="nama_walikelas" placeholder="Nama Wali Kelas" value="{{ $data->nama_walikelas }}">
                     </div>
                     <div class="form-group">
                       <label for="jurusan">Jurusan</label>
-                      <input type="text" class="form-control" id="jurusan" placeholder="Jurusan">
+                      <input type="text" class="form-control" name="nama_jurusan" placeholder="Jurusan" value="{{ $data->nama_jurusan }}">
                     </div>
                    
                     <button type="submit" class="btn btn-primary mr-2 shadow">Submit</button>

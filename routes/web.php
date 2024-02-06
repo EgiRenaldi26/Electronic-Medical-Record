@@ -31,7 +31,10 @@ Route::get('/datasiswa-edit',[SiswaController::class,'edit'])->name('siswa.edit'
 
 Route::get('/datakelas',[KelasController::class,'index'])->name('kelas.index');
 Route::get('/datakelas-tambah',[KelasController::class,'create'])->name('kelas.create');
-Route::get('/datakelas-edit',[KelasController::class,'edit'])->name('kelas.edit');
+Route::post('/datakelas-tambah/store',[KelasController::class,'store'])->name('kelas.store');
+Route::put('/datakelas-update/update/{id}',[KelasController::class,'update'])->name('kelas.update');
+Route::delete('/datakelas-delete/delete/{id}',[KelasController::class,'destroy'])->name('kelas.destroy');
+Route::get('/datakelas-edit/{id}',[KelasController::class,'edit'])->name('kelas.edit');
 
 Route::get('/datausers',[UsersController::class,'index'])->name('users.index');
 Route::get('/datausers-tambah',[UsersController::class,'create'])->name('users.create');
