@@ -1,96 +1,107 @@
 @extends('layout.header')
 @section('content')
 <style>
+    button.t {
+        position: relative;
+        outline: none;
+        text-decoration: none;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        text-transform: uppercase;
+        height: 30px;
+        width: 130px;
+        opacity: 1;
+        background-color: #ffffff;
+        border: 1px solid rgba(22, 76, 167, 0.6);
+    }
+
+    button.t span {
+        color: #164ca7;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.7px;
+    }
+
+    button.t:hover {
+        animation: rotate 0.7s ease-in-out both;
+    }
+
+    button.t:hover span {
+        animation: storm 0.7s ease-in-out both;
+        animation-delay: 0.06s;
+    }
+
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg) translate3d(0, 0, 0);
+        }
+
+        25% {
+            transform: rotate(3deg) translate3d(0, 0, 0);
+        }
+
+        50% {
+            transform: rotate(-3deg) translate3d(0, 0, 0);
+        }
+
+        75% {
+            transform: rotate(1deg) translate3d(0, 0, 0);
+        }
+
+        100% {
+            transform: rotate(0deg) translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes storm {
+        0% {
+            transform: translate3d(0, 0, 0) translateZ(0);
+        }
+
+        25% {
+            transform: translate3d(4px, 0, 0) translateZ(0);
+        }
+
+        50% {
+            transform: translate3d(-3px, 0, 0) translateZ(0);
+        }
+
+        75% {
+            transform: translate3d(2px, 0, 0) translateZ(0);
+        }
+
+        100% {
+            transform: translate3d(0, 0, 0) translateZ(0);
+        }
+    }
 
 
-button.t {
-  position: relative;
-  outline: none;
-  text-decoration: none;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  height: 30px;
-  width: 130px;
-  opacity: 1;
-  background-color: #ffffff;
-  border: 1px solid rgba(22, 76, 167, 0.6);
-}
-button.t span {
-  color: #164ca7;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.7px;
-}
-button.t:hover {
-  animation: rotate 0.7s ease-in-out both;
-}
-button.t:hover span {
-  animation: storm 0.7s ease-in-out both;
-  animation-delay: 0.06s;
-}
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-  25% {
-    transform: rotate(3deg) translate3d(0, 0, 0);
-  }
-  50% {
-    transform: rotate(-3deg) translate3d(0, 0, 0);
-  }
-  75% {
-    transform: rotate(1deg) translate3d(0, 0, 0);
-  }
-  100% {
-    transform: rotate(0deg) translate3d(0, 0, 0);
-  }
-}
-@keyframes storm {
-  0% {
-    transform: translate3d(0, 0, 0) translateZ(0);
-  }
-  25% {
-    transform: translate3d(4px, 0, 0) translateZ(0);
-  }
-  50% {
-    transform: translate3d(-3px, 0, 0) translateZ(0);
-  }
-  75% {
-    transform: translate3d(2px, 0, 0) translateZ(0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) translateZ(0);
-  }
-}
+    .typing-demo {
+        width: 50ch;
+        animation: typing 1s steps(22), blink .3s step-end infinite alternate;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid;
+        font-family: 'poppins';
+        font-size: 15px;
+    }
 
+    @keyframes typing {
+        from {
+            width: 0
+        }
+    }
 
+    @keyframes blink {
+        50% {
+            border-color: transparent
+        }
+    }
 
-.typing-demo {
-  width: 50ch;  
-  animation: typing 1s steps(22), blink .3s step-end infinite alternate;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid;
-  font-family: 'poppins';
-  font-size: 15px;
-}
-
-@keyframes typing {
-  from {
-    width: 0
-  }
-}
-    
-@keyframes blink {
-  50% {
-    border-color: transparent
-  }
-}
 </style>
 <div class="row">
     <div class="col-md-12 grid-margin">
@@ -99,7 +110,7 @@ button.t:hover span {
                 <h3 class="font-weight-bold">Welcome Admin</h3>
                 <div class="wrapper">
                     <div class="typing-demo">
-                     Selamat Berkerja , Anda Berada pada halaman <strong>Data Siswa</strong>
+                        Selamat Berkerja , Anda Berada pada halaman <strong>Data Siswa</strong>
                     </div>
                 </div>
             </div>
@@ -108,9 +119,9 @@ button.t:hover span {
         <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                 <a style="text-decoration:none;" href="{{ route('siswa.create')}}">
-                  <button class="t">
-                    <span><i class="fas fa-plus"></i> TAMBAH</span>
-                  </button>
+                    <button class="t">
+                        <span><i class="fas fa-plus"></i> TAMBAH</span>
+                    </button>
                 </a>
             </div>
         </div>
@@ -129,29 +140,34 @@ button.t:hover span {
                             <tr>
                                 <th>No</th>
                                 <th>Nama Lengkap</th>
-                                <th>Jenis Kelamin</th>
                                 <th>Kelas</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Alamat</th>
                                 <th>Nomor Telpon</th>
-                                <th>Tanggal</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($data as $item)
                             <tr>
-                              <td>No</td>
-                              <td>Nama Lengkap</td>
-                              <td>Jenis Kelamin</td>
-                              <td>Kelas</td>
-                              <td>Alamat</td>
-                              <td>Nomor Telpon</td>
-                              <td>Tanggal</td>
-                              <td>
-                                  <a href="{{ route('siswa.edit')}}" class="btn btn-outline-warning btn-sm">Edit</a> -
-                                  <a href="" class="btn btn-inverse-danger btn-sm">Hapus</a> -
-                                  <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
-                              </td>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$item->nama_lengkap}}</td>
+                                <td>{{$item->kelas->nama_kelas}}</td>
+                                <td>{{$item->jenis_kelamin}}</td>
+                                <td>{{$item->alamat}}</td>
+                                <td>{{$item->notelp_orangtua}}</td>
+                                <td>
+                                    <a href="{{ route('siswa.edit', $item->id)}}"
+                                        class="btn btn-outline-warning btn-sm">Edit</a> -
+                                    <form action="{{route('siswa.destroy', $item->id)}}" method="POST">
+                                      @csrf
+                                      @method('delete')
+                                      <button
+                                            type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                    </form>
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Obat;
 use Illuminate\Http\Request;
 
 class ObatController extends Controller
@@ -14,7 +15,8 @@ class ObatController extends Controller
     public function index()
     {
         $title = "Data Obat";
-        return view('pages.dataobat.dataobat',compact('title'));
+        $data = Obat::all();
+        return view('pages.dataobat.dataobat',compact('title','data'));
     }
 
     /**
@@ -36,7 +38,21 @@ class ObatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_obat' => 'required',
+            'jenis_obat' => 'required',
+            'fungsi_obat' => 'required',
+            'qty' => 'required',
+        ]);
+
+        Obat::create([
+            'nama_obat' => $request->input('nama_obat'),
+            'jenis_obat' => $request->input('jenis_obat'),
+            'fungsi_obat' => $request->input('fungsi_obat'),
+            'qty' => $request->input('qty'),
+        ]);
+
+        return redirect()->route('obat.index')->with('success', 'Data Obat Berhasil ditambahkan');
     }
 
     /**
@@ -59,7 +75,8 @@ class ObatController extends Controller
     public function edit($id)
     {
         $title = "Data Obat Edit";
-        return view('pages.dataobat.dataobat_edit',compact('title'));
+        $data = Obat::find($id);
+        return view('pages.dataobat.dataobat_edit',compact('title','data'));
     }
 
     /**
@@ -71,7 +88,23 @@ class ObatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_obat' => 'required',
+            'jenis_obat' => 'required',
+            'fungsi_obat' => 'required',
+            'qty' => 'required',
+        ]);
+
+        $obat = Obat::find($id);
+        $obat->update([
+            'nama_obat' => $request->input('nama_obat'),
+            'jenis_obat' => $request->input('jenis_obat'),
+            'fungsi_obat' => $request->input('fungsi_obat'),
+            'qty' => $request->input('qty'),
+        ]);
+        $obat->save();
+
+        return redirect()->route('obat.index')->with('success', 'Data Obat Berhasil dirubah');
     }
 
     /**
@@ -82,6 +115,8 @@ class ObatController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $obat = Obat::find($id);
+        $obat->delete();
+        return redirect()->route('obat.index')->with('success', 'Data Obat Berhasil dihapus');
     }
 }

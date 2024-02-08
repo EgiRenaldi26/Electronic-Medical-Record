@@ -137,19 +137,34 @@ button.t:hover span {
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($data as $item)
                             <tr>
-                              <td>No</td>
-                              <td>Nama Lengkap</td>
-                              <td>Nis</td>
-                              <td>Password</td>
-                              <td>Role</td>
-                              <td>Created At</td>
+                              <td>{{$loop->iteration}}</td>
+                              <td>{{$item->siswa->nama_lengkap}}</td>
+                              <td>{{$item->tanggal_masuk}}</td>
+                              <td>{{$item->keluhan}}</td>
                               <td>
-                                  <a href="{{ route('rekam.edit')}}" class="btn btn-outline-warning btn-sm">Edit</a> -
-                                  <a href="" class="btn btn-inverse-danger btn-sm">Hapus</a> -
+                                  <ul>
+                                    @foreach ($item->obat as $obat)
+                                        @php
+                                          $obatname = App\Models\Obat::find($obat['obatId']);    
+                                        @endphp                                        
+                                        <li>{{$obatname->nama_obat}} - {{$obat['qty']}} Tablet</li>
+                                    @endforeach
+                                  </ul>
+                              </td>
+                              <td>{{$item->ket}}</td>
+                              <td>
+                                  <a href="{{ route('rekam.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a> -
+                                  <form action="{{route('rekam.destroy',$item->id)}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                  </form>
                                   <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
                               </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

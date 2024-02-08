@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Obat;
+use App\Models\RiwayatPasien;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class RekamController extends Controller
@@ -14,7 +17,8 @@ class RekamController extends Controller
     public function index()
     {
         $title = "Rekam Medis";
-        return view('pages.rekam.rekam',compact('title'));
+        $data = RiwayatPasien::all();
+        return view('pages.rekam.rekam',compact('title','data'));
     }
 
     /**
@@ -25,7 +29,9 @@ class RekamController extends Controller
     public function create()
     {
         $title = "Rekam Tambah";
-        return view('pages.rekam.rekam_create',compact('title'));
+        $siswa = Siswa::all();
+        $obat = Obat::all();
+        return view('pages.rekam.rekam_create',compact('title','siswa','obat'));
     }
 
     /**
@@ -36,8 +42,55 @@ class RekamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'siswa_id' => 'required',
+            'tanggal_masuk' => 'required',
+            'keluhan' => 'required',
+            'obat' => 'required|array',
+            'qty' => 'required|array',
+            'ket' => 'required',
+
+        ]);
+
+        $obatIds = $request->input('obatId');
+        $qtys = $request->input('qty');
+
+        RiwayatPasien::create([
+            'siswa_id' => $request->input('siswa_id'),
+            'tanggal_masuk' => $request->input('tanggal_masuk'),
+            'keluhan' => $request->input('keluhan'),
+            'ket' => $request->input('ket'),
+            'obat' => $this->prepareObat($obatIds,$qtys),
+        ]);
+
+        foreach ($request->obatId as $key => $obatId) {
+            $obat = Obat::find($obatId);
+            $qty = $request->qty[$key];
+            $obat->stok -= $qty;
+            if($obat->qty = 0){
+                return back()->with('error', 'Stok Obat Tidak Cukup');
+            }else{
+                $obat->save();
+            }
+        }
+
+        return redirect()->route('rekam.index')->with('success', 'Data Riwayat Pasien Berhasil ditambahkan');
     }
+
+    private function prepareObat($obatIds, $qtys)
+    {
+        $preparedobat = [];
+
+        foreach ($obatIds as $index => $obatId) {
+            $preparedobat[] = [
+                'obatId' => $obatId,
+                'qty' => $qtys[$index],
+            ];
+        }
+
+        return $preparedobat;
+    }
+
 
     /**
      * Display the specified resource.
@@ -59,7 +112,10 @@ class RekamController extends Controller
     public function edit($id)
     {
         $title = "Rekam Edit";
-        return view('pages.rekam.rekam_edit',compact('title'));
+        $data = RiwayatPasien::find($id);
+        $siswa = Siswa::all();
+        $obat = Obat::all();
+        return view('pages.rekam.rekam_edit',compact('title','data','obat','siswa'));
     }
 
     /**
@@ -71,7 +127,44 @@ class RekamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'siswa_id' => 'required',
+            'tanggal_masuk' => 'required',
+            'keluhan' => 'required',
+            'obat' => 'required|array',
+            'qty' => 'required|array',
+            'ket' => 'required',
+
+        ]);
+
+        $obatIds = $request->input('obatId');
+        $qtys = $request->input('qty');
+
+        $riwayat = RiwayatPasien::find($id);
+
+        $riwayat->update([
+            'siswa_id' => $request->input('siswa_id'),
+            'tanggal_masuk' => $request->input('tanggal_masuk'),
+            'keluhan' => $request->input('keluhan'),
+            'ket' => $request->input('ket'),
+            'obat' => $this->prepareObat($obatIds,$qtys),
+        ]);
+
+        foreach ($request->obatId as $key => $obatId) {
+            $obat = Obat::find($obatId);
+            $qty = $request->qty[$key];
+            $obat->qty -= $qty;
+
+            if($obat->qty = 0){
+                return back()->with('error', 'Stok Obat Tidak Cukup');
+            }else{
+                $obat->save();
+            }
+        }
+
+        $riwayat->save();
+
+        return redirect()->route('rekam.index')->with('success', 'Data Riwayat Pasien Berhasil Update');
     }
 
     /**
@@ -82,6 +175,8 @@ class RekamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $riwayat = RiwayatPasien::find($id);
+        $riwayat->delete();
+        return redirect()->route('rekam.index')->with('success', 'Data Riwayat Pasien Berhasil dihapus');
     }
 }

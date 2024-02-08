@@ -107,7 +107,7 @@ button.t:hover span {
         <br>
         <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                <a style="text-decoration:none;" href="{{ route('kelas.create')}}">
+                <a style="text-decoration:none;" href="{{ route('obat.create')}}">
                   <button class="t">
                     <span><i class="fas fa-plus"></i> TAMBAH</span>
                   </button>
@@ -132,24 +132,27 @@ button.t:hover span {
                                 <th>Jenis Obat</th>
                                 <th>Manfaat</th>
                                 <th>Stok</th>
-                                <th>Created At</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                              <td>No</td>
-                              <td>Nama Obat</td>
-                              <td>Jenis Obat</td>
-                              <td>Manfaat</td>
-                              <td>Stok</td>
-                              <td>Created At</td>
-                              <td>
-                                  <a href="{{ route('obat.edit')}}" class="btn btn-outline-warning btn-sm">Edit</a> -
-                                  <a href="" class="btn btn-inverse-danger btn-sm">Hapus</a> -
-                                  <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
-                              </td>
-                            </tr>
+                            @foreach ($data as $item)
+                              <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama_obat }}</td>
+                                <td>{{ $item->jenis_obat }}</td>
+                                <td>{{ $item->fungsi_obat }}</td>
+                                <td>{{ $item->qty }}</td>
+                                <td>
+                                    <a href="{{ route('obat.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a> -
+                                    <form action="{{route('obat.destroy', $item->id)}}" method="POST">
+                                      @csrf
+                                      @method('delete')
+                                      <button type="submit" class="btn btn-inverse-danger btn-sm">hapus</button>
+                                    </form>
+                                  </td>
+                              </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

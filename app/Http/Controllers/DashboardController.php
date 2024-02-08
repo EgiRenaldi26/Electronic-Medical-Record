@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
+use App\Models\Obat;
+use App\Models\RiwayatPasien;
+use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +19,14 @@ class DashboardController extends Controller
     public function index()
     {
         $title = "Dashboard";
-        return view('pages.dashboard',compact('title'));
+
+        $x['today'] = Carbon::today()->toDateString();
+
+        $x['obat'] = Obat::all();
+        $x['kelas'] = Kelas::all();
+        $x['siswa'] = Siswa::all();
+        $x['riwayat'] = RiwayatPasien::all();
+        return view('pages.dashboard',compact('title'),$x);
     }
 
     /**

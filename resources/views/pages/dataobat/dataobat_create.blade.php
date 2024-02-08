@@ -9,23 +9,28 @@
                 <br>
                 <a href="{{ route('obat.index')}}" class="btn btn-outline-primary btn-sm">Kembali</a>
                 <br><br>
-                  <form class="forms-sample">
+                  <form class="forms-sample" action="{{ route('obat.store') }}" method="POST">
+                    @csrf
                     <div class="form-group">
                       <label for="nama_obat">Nama Obat</label>
-                      <input type="text" class="form-control" id="nama_obat" placeholder="Nama Obat">
+                      <input type="text" class="form-control" name="nama_obat" placeholder="Nama Obat">
                     </div>
                     <div class="form-group">
                       <label for="jenis_obat">Jenis Obat</label>
-                      <input type="text" class="form-control" id="jenis_obat" placeholder="Nama Wali Kelas">
+                      <select name="jenis_obat" id="" class="form-control">
+                        <option value="">Pilih Jenis Obat</option>
+                        <option value="Cair">Cair</option>
+                        <option value="Tablet">Tablet</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label for="manfaat">Manfaat</label>
-                      <input type="text" class="form-control" id="manfaat" placeholder="manfaat">
+                      <input type="text" class="form-control" name="fungsi_obat" placeholder="manfaat">
                     </div>
 
                     <div class="form-group">
                       <label for="stok">Stok</label>
-                      <input type="number" class="form-control" id="stok" placeholder="stok">
+                      <input type="number" class="form-control" name="qty" placeholder="stok">
                     </div>
                    
                     <button type="submit" class="btn btn-primary mr-2 shadow">Submit</button>

@@ -107,7 +107,7 @@ button.t:hover span {
         <br>
         <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                <a style="text-decoration:none;" href="{{ route('kelas.create')}}">
+                <a style="text-decoration:none;" href="{{ route('users.create')}}">
                   <button class="t">
                     <span><i class="fas fa-plus"></i> TAMBAH</span>
                   </button>
@@ -129,27 +129,29 @@ button.t:hover span {
                             <tr>
                                 <th>No</th>
                                 <th>Nama Lengkap</th>
-                                <th>Nis</th>
-                                <th>Password</th>
+                                <th>Username</th>
                                 <th>Role</th>
-                                <th>Created At</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($data as $item)
                             <tr>
-                              <td>No</td>
-                              <td>Nama Lengkap</td>
-                              <td>Nis</td>
-                              <td>Password</td>
-                              <td>Role</td>
-                              <td>Created At</td>
+                              <td>{{ $loop->iteration }}</td>
+                              <td>{{$item->name}}</td>
+                              <td>{{$item->username}}</td>
+                              <td>{{$item->role}}</td>
                               <td>
-                                  <a href="{{ route('users.edit')}}" class="btn btn-outline-warning btn-sm">Edit</a> -
-                                  <a href="" class="btn btn-inverse-danger btn-sm">Hapus</a> -
-                                  <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
+                                  <a href="{{ route('users.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a> -
+                                  <form action="{{route('users.destroy',$item->id)}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                  </form>
+                                  <a href="" class="btn btn-outline-primary btn-sm">Ganti Password</a> 
                               </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

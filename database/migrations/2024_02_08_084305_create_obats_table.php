@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('obats', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->enum('role',['admin','operator'])->default('admin');
+            $table->string('nama_obat');
+            $table->enum('jenis_obat',['Cair','Tablet']);
+            $table->string('qty');
+            $table->string('fungsi_obat');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('obats');
     }
 };
