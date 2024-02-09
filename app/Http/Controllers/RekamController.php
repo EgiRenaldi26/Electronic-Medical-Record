@@ -66,7 +66,7 @@ class RekamController extends Controller
         foreach ($request->obatId as $key => $obatId) {
             $obat = Obat::find($obatId);
             $qty = $request->qty[$key];
-            $obat->stok -= $qty;
+            $obat->qty -= $qty;
             if($obat->qty = 0){
                 return back()->with('error', 'Stok Obat Tidak Cukup');
             }else{
