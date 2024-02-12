@@ -99,7 +99,7 @@ button.t:hover span {
                 <h3 class="font-weight-bold">Welcome Admin</h3>
                 <div class="wrapper">
                     <div class="typing-demo">
-                     Selamat Berkerja , Anda Berada pada halaman <strong>Data Users</strong>
+                     Anda Berada pada halaman <strong>Data Users</strong>
                     </div>
                 </div>
             </div>
@@ -142,13 +142,15 @@ button.t:hover span {
                               <td>{{$item->username}}</td>
                               <td>{{$item->role}}</td>
                               <td>
-                                  <a href="{{ route('users.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a> -
+                                  <div class="btn-group">
+                                    <a href="{{ route('users.edit', $item->id)}}" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                                   <form action="{{route('users.destroy',$item->id)}}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                    <button type="submit" class="btn btn-inverse-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                   </form>
-                                  <a href="" class="btn btn-outline-primary btn-sm">Ganti Password</a> 
+                                  <a href="" class="btn btn-outline-primary btn-sm"><i class="fa fa-lock" aria-hidden="true"></i></a> 
+                                  </div>
                               </td>
                             </tr>
                             @endforeach

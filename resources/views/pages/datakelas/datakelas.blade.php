@@ -99,7 +99,7 @@ button.t:hover span {
                 <h3 class="font-weight-bold">Welcome Admin</h3>
                 <div class="wrapper">
                     <div class="typing-demo">
-                     Selamat Berkerja , Anda Berada pada halaman <strong>Data Kelas</strong>
+                     Anda Berada pada halaman <strong>Data Kelas</strong>
                     </div>
                 </div>
             </div>
@@ -141,14 +141,19 @@ button.t:hover span {
                               <td>{{ $item->nama_kelas }}</td>
                               <td>{{ $item->nama_walikelas }}</td>
                               <td>{{ $item->nama_jurusan }}</td>
-                              <td class="btn-group">
-                                  <a href="{{ route('kelas.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a>
+                              <td >
+                                <div class="btn-group">
+                                  <a href="{{ route('kelas.edit', $item->id)}}" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                                  </a>
                                   <form action="{{ route('kelas.destroy', $item->id)}}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                    <button type="submit" class="btn btn-inverse-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                   </form>
-                                  <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
+                                  <a href="" class="btn btn-inverse-primary btn-sm"><i class="fa fa-print" aria-hidden="true"></i>
+                                  </a> 
+                                </div>
+                                  
                               </td>
                             </tr>
                           @endforeach

@@ -155,13 +155,15 @@ button.t:hover span {
                               </td>
                               <td>{{$item->ket}}</td>
                               <td>
-                                  <a href="{{ route('rekam.edit', $item->id)}}" class="btn btn-outline-warning btn-sm">Edit</a> -
+                                  <div class="btn-group">
+                                    <a href="{{ route('rekam.edit', $item->id)}}" class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                                   <form action="{{route('rekam.destroy',$item->id)}}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
+                                    <button type="submit" class="btn btn-inverse-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                   </form>
-                                  <a href="" class="btn btn-outline-primary btn-sm">Print</a> 
+                                  <a href="" class="btn btn-outline-primary btn-sm"><i class="fa fa-print" aria-hidden="true"></i></a> 
+                                  </div>
                               </td>
                             </tr>
                             @endforeach

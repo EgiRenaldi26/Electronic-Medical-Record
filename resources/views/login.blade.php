@@ -28,7 +28,8 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <Center>
-                    <h4>ELECTRONIC MEDICAL RECORD</h4>
+                  <img src="{{ asset('images/emr.png')}}" alt="" width="200" height="150">
+                    <h4><strong>ELECTRONIC MEDICAL RECORD</strong></h4>
                     <h6 class="font-weight-light">Silakan Login terlebih dahulu!</h6>
                 </Center>
                 

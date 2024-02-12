@@ -110,7 +110,7 @@
                 <h3 class="font-weight-bold">Welcome Admin</h3>
                 <div class="wrapper">
                     <div class="typing-demo">
-                        Selamat Berkerja , Anda Berada pada halaman <strong>Data Siswa</strong>
+                       Anda Berada pada halaman <strong>Data Siswa</strong>
                     </div>
                 </div>
             </div>
@@ -157,14 +157,16 @@
                                 <td>{{$item->alamat}}</td>
                                 <td>{{$item->notelp_orangtua}}</td>
                                 <td>
-                                    <a href="{{ route('siswa.edit', $item->id)}}"
-                                        class="btn btn-outline-warning btn-sm">Edit</a> -
-                                    <form action="{{route('siswa.destroy', $item->id)}}" method="POST">
-                                      @csrf
-                                      @method('delete')
-                                      <button
-                                            type="submit" class="btn btn-inverse-danger btn-sm">Hapus</button>
-                                    </form>
+                                    <div class="btn-group">
+                                        <a href="{{ route('siswa.edit', $item->id)}}"
+                                            class="btn btn-outline-warning btn-sm"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                        <form action="{{route('siswa.destroy', $item->id)}}" method="POST">
+                                          @csrf
+                                          @method('delete')
+                                          <button
+                                                type="submit" class="btn btn-inverse-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
